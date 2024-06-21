@@ -11,13 +11,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
         }
-        #pdf-container {
-            width: 100%;
-            height: 100vh;
+        .image-container {
             display: none;
+            width: 100%;
+            text-align: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
         }
         #gif {
             max-width: 100%;
@@ -27,15 +31,17 @@
 </head>
 <body>
     <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/Believe.gif" alt="Welcome GIF">
-    <div id="pdf-container">
-        <iframe id="pdf" src="https://ozzaii.github.io/FIN-Cafe-Menu/menu.pdf" width="100%" height="100%"></iframe>
+    <div class="image-container" id="image-container">
+        <img src="https://ozzaii.github.io/FIN-Cafe-Menu/1.jpg" alt="Menu Page 1">
+        <img src="https://ozzaii.github.io/FIN-Cafe-Menu/2.jpg" alt="Menu Page 2">
+        <img src="https://ozzaii.github.io/FIN-Cafe-Menu/4.jpg" alt="Menu Page 3">
     </div>
     <script>
         document.getElementById('gif').onload = function() {
             console.log("GIF loaded successfully.");
             setTimeout(function() {
                 document.getElementById('gif').style.display = 'none';
-                document.getElementById('pdf-container').style.display = 'block';
+                document.getElementById('image-container').style.display = 'block';
             }, 3120); // Duration of the GIF in milliseconds
         };
     </script>
