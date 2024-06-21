@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+        video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <video id="welcomeVideo" controls autoplay>
+        <source src="https://drive.google.com/uc?export=download&id=1QXDImKJCJauvGM_wKrVnGVI5vvfoHCMf" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <script>
+        const video = document.getElementById('welcomeVideo');
+        video.onended = function() {
+            window.location.href = 'https://drive.google.com/uc?export=download&id=1BwTYz93iPHv1ygnHyiECRJ3DWXEUy59J';
+        };
+    </script>
+</body>
+</html>
