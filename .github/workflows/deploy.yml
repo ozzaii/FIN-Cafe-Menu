@@ -5,6 +5,10 @@ on:
     branches:
       - main  # Set a branch to deploy
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
