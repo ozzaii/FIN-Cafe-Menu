@@ -8,23 +8,23 @@
         body {
             margin: 0;
             overflow: hidden;
-        }
-        video {
-            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            object-fit: cover;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
         }
     </style>
 </head>
 <body>
-    <video id="video" controls autoplay>
-        <source src="https://yourusername.github.io/cafe-menu/Believe-2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/Believe.gif" alt="Welcome Video">
     <script>
-        document.getElementById('video').addEventListener('ended', function() {
-            window.location.href = 'https://yourusername.github.io/cafe-menu/menu.pdf';
-        });
+        setTimeout(function() {
+            window.location.href = 'https://ozzaii.github.io/FIN-Cafe-Menu/menu.pdf';
+        }, 10000); // Adjust the time (in milliseconds) to match the length of your GIF
     </script>
 </body>
 </html>
