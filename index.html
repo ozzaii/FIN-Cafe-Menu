@@ -20,11 +20,14 @@
     </style>
 </head>
 <body>
-    <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/Believe.gif" alt="Welcome Video">
+    <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/Believe.gif" alt="Welcome GIF">
     <script>
-        setTimeout(function() {
-            window.location.href = 'https://ozzaii.github.io/FIN-Cafe-Menu/menu.pdf';
-        }, 10000); // Adjust the time (in milliseconds) to match the length of your GIF
+        document.getElementById('gif').onload = function() {
+            console.log("GIF loaded successfully.");
+            setTimeout(function() {
+                window.location.href = 'https://ozzaii.github.io/FIN-Cafe-Menu/menu.pdf';
+            }, 10000); // Replace 10000 with the duration of your GIF in milliseconds
+        };
     </script>
 </body>
 </html>
