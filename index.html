@@ -37,9 +37,9 @@
     </style>
 </head>
 <body>
-    <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/Believing.gif" alt="Welcome GIF">
+    <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/Believing.gif" alt="Welcome GIF" onerror="console.error('Error loading GIF');">
     <div class="image-container" id="image-container">
-        <img src="https://ozzaii.github.io/FIN-Cafe-Menu/11.jpg" alt="Menu Page">
+        <img src="https://ozzaii.github.io/FIN-Cafe-Menu/11.jpg" alt="Menu Page" onerror="console.error('Error loading JPEG');">
     </div>
     <script>
         document.getElementById('gif').onload = function() {
@@ -49,11 +49,10 @@
                 setTimeout(function() {
                     document.getElementById('gif').style.display = 'none';
                     document.getElementById('image-container').style.display = 'block';
-                    setTimeout(function() {
-                        document.getElementById('image-container').style.opacity = '1';
-                        console.log("Image container displayed.");
+                    document.getElementById('image-container').style.opacity = '1';
+                    console.log("Image container displayed.");
                 }, 500); // Time for GIF to fade out
-            }, 2500); // Duration of the GIF in milliseconds
+            }, 2950); // Duration of the GIF in milliseconds
         };
     </script>
 </body>
