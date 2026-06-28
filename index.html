@@ -1,59 +1,322 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video and Menu</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .image-container {
-            display: none;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .image-container img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-        }
-        #gif {
-            max-width: 100%;
-            max-height: 100%;
-            transition: opacity 0.5s ease-in-out;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>fin Cafe — Menü · Uzungöl</title>
+<meta name="description" content="fin Cafe — Uzungöl, Trabzon. Sıcak içecekler, tatlılar, soğuk içecekler ve mutfaktan lezzetler. TR · EN · AR.">
+<meta name="theme-color" content="#e9ece9">
+
+<meta property="og:type" content="restaurant.menu">
+<meta property="og:title" content="fin Cafe — Menü">
+<meta property="og:description" content="Uzungöl'ün kıyısında, sisin içinden sıcak bir mola.">
+<meta property="og:locale" content="tr_TR">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b1d14'/%3E%3Cpath d='M8 13h13v6a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4z' fill='none' stroke='%23d98e5a' stroke-width='2'/%3E%3Cpath d='M21 14h2.5a2.5 2.5 0 0 1 0 5H21' fill='none' stroke='%23d98e5a' stroke-width='2'/%3E%3Cpath d='M11 6c-1 1.4 0 2.6 0 4M15 5c-1 1.6 0 2.8 0 4.4' stroke='%23d98e5a' stroke-width='1.6' stroke-linecap='round' opacity='.8'/%3E%3C/svg%3E">
+
+<link rel="preload" as="font" type="font/woff2" href="fonts/fraunces-vf-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/geist-normal-400-latin.woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<script src="app.js?v=1"></script>
+
+<style>
+:root{
+  --bone:oklch(0.965 0.008 83);--cream:oklch(0.948 0.016 80);--sand:oklch(0.900 0.024 76);
+  --clay:oklch(0.84 0.03 70);--stone:oklch(0.58 0.024 58);
+  --ink:oklch(0.225 0.018 52);--ink-soft:oklch(0.34 0.020 50);--ink-mute:oklch(0.48 0.018 54);
+  --terra:oklch(0.575 0.155 40);--terra-deep:oklch(0.47 0.14 37);--ember:oklch(0.74 0.150 64);
+  --line:oklch(0.225 0.018 52 / 0.16);--line-soft:oklch(0.225 0.018 52 / 0.09);--line-strong:oklch(0.225 0.018 52 / 0.32);
+  --bg:#e9ece9;--haze:rgba(150,170,180,0);
+  --display:"Fraunces VF","Fraunces","Times New Roman",serif;
+  --body:"Geist","Helvetica Neue",system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --ar:"Geeza Pro","Noto Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);--maxw:840px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:400;font-size:17px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;transition:background .25s linear;}
+::selection{background:var(--terra);color:var(--bone);}
+img,svg,canvas{display:block;max-width:100%;}
+
+/* language visibility */
+html[lang="tr"] .en,html[lang="tr"] .ar{display:none;}
+html[lang="en"] .tr,html[lang="en"] .ar{display:none;}
+html[lang="ar"] .tr,html[lang="ar"] .en{display:none;}
+html[lang="ar"] .ar{font-family:var(--ar);font-style:normal!important;font-variation-settings:normal!important;letter-spacing:0!important;}
+html[lang="ar"] body{line-height:1.7;}
+
+/* atmosphere */
+.atmos{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;}
+.atmos .haze{position:absolute;inset:0;background:var(--haze);transition:background .25s linear;}
+.celest{position:fixed;left:0;top:0;width:130px;height:130px;border-radius:50%;z-index:-1;pointer-events:none;will-change:transform;
+  background:radial-gradient(circle at 50% 50%,oklch(0.96 0.07 80/.95),oklch(0.85 0.13 70/.5) 42%,transparent 70%);filter:blur(2px);}
+.grain{position:fixed;inset:-50%;z-index:40;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--terra),var(--ember));z-index:60;}
+
+/* language toggle */
+.lang{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;z-index:50;display:flex;gap:2px;padding:3px;border-radius:999px;
+  background:oklch(0.97 0.01 80/.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:0 6px 22px -14px oklch(0.225 0.018 52/.5);}
+html[dir="rtl"] .lang{right:auto;left:14px;}
+.lang button{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.05em;border:0;background:none;color:var(--ink-mute);cursor:pointer;padding:6px 10px;border-radius:999px;transition:color .25s,background .25s;}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bone);}
+
+/* hero */
+.hero{position:relative;min-height:92svh;min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:0 22px;}
+.scene{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.scene svg{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:160%;max-width:none;height:auto;}
+.mist{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.hero-inner{position:relative;z-index:3;}
+.place{font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--terra);margin:0 0 22px;}
+.place::before,.place::after{content:"—";opacity:.5;margin:0 .7em;}
+.mark{font-family:var(--display);font-weight:380;font-size:clamp(62px,19vw,150px);line-height:.9;margin:0;color:var(--ink);letter-spacing:-.015em;font-variation-settings:"opsz" 144,"SOFT" 40,"WONK" 1;}
+.mark .fin{font-style:italic;font-weight:340;}
+.mark .cafe{font-weight:600;}
+.reflect{position:relative;z-index:2;height:clamp(40px,9vw,74px);margin-top:-6px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 78%);mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 78%);}
+.reflect .mark{transform:scaleY(-1);opacity:.22;filter:blur(.4px);color:var(--terra-deep);}
+.tagline{font-family:var(--display);font-style:italic;font-weight:360;font-size:clamp(18px,4.8vw,28px);color:var(--ink-soft);margin:18px auto 0;max-width:30ch;line-height:1.35;position:relative;z-index:3;}
+.scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--stone);font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;}
+.scrollcue .dot{width:5px;height:5px;border-radius:50%;background:var(--terra);animation:fall 1.8s var(--ease) infinite;}
+@keyframes fall{0%{transform:translateY(-6px);opacity:0;}40%{opacity:1;}100%{transform:translateY(10px);opacity:0;}}
+
+/* sticky category nav */
+.catnav{position:sticky;top:0;z-index:30;background:oklch(0.97 0.012 80/.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft);
+  opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .4s var(--ease),transform .4s var(--ease),visibility .4s;}
+.catnav.show{opacity:1;visibility:visible;transform:none;}
+.catnav ul{display:flex;gap:4px;list-style:none;margin:0 auto;padding:9px 14px;max-width:var(--maxw);overflow-x:auto;scrollbar-width:none;}
+.catnav ul::-webkit-scrollbar{display:none;}
+.catnav a{display:block;white-space:nowrap;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-mute);padding:7px 13px;border-radius:999px;transition:color .2s,background .2s;}
+html[lang="ar"] .catnav a{font-family:var(--ar);}
+.catnav a.active{background:var(--ink);color:var(--bone);}
+
+/* spotlight */
+.spotlight{max-width:var(--maxw);margin:0 auto;padding:clamp(46px,9vw,82px) 22px clamp(10px,3vw,24px);}
+.spot-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--terra);text-align:center;margin:0 0 28px;}
+html[lang="ar"] .spot-kicker{font-family:var(--ar);letter-spacing:0;}
+.spot-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:680px){.spot-grid{grid-template-columns:repeat(3,1fr);}}
+.spot{position:relative;border:1px solid var(--line);border-radius:20px;padding:26px 22px 22px;overflow:hidden;text-align:center;
+  background:linear-gradient(165deg,oklch(0.965 0.02 78/.6),oklch(0.9 0.03 70/.35));transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);}
+.spot .photo{width:118px;height:118px;border-radius:50%;object-fit:cover;margin:0 auto 16px;border:3px solid oklch(0.97 0.01 80);box-shadow:0 18px 40px -22px oklch(0.225 0.018 52/.6);}
+.spot h3{font-family:var(--display);font-style:italic;font-weight:440;font-size:clamp(21px,5vw,25px);margin:0 0 6px;color:var(--ink);font-variation-settings:"opsz" 40,"SOFT" 20,"WONK" 1;}
+.spot p{font-size:13px;color:var(--ink-mute);margin:0 0 14px;line-height:1.45;}
+.spot .pr{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--ink-soft);}
+.spot .pr .cur{color:var(--terra);}
+@media(hover:hover){.spot:hover{transform:translateY(-5px);box-shadow:0 30px 60px -36px oklch(0.225 0.018 52/.5);border-color:var(--line-strong);}}
+
+/* menu */
+main{max-width:var(--maxw);margin:0 auto;padding:clamp(20px,5vw,40px) 22px 24px;}
+.cat{margin:0 0 clamp(40px,8vw,68px);scroll-margin-top:62px;}
+.cat:last-of-type{margin-bottom:18px;}
+.cat-head{display:flex;align-items:baseline;gap:14px;margin:0 0 20px;}
+.cat-head h2{font-family:var(--display);font-style:italic;font-weight:440;font-size:clamp(27px,7vw,42px);margin:0;color:var(--ink);letter-spacing:-.01em;white-space:nowrap;font-variation-settings:"opsz" 72,"SOFT" 24,"WONK" 1;}
+.cat-head .rule{flex:1;height:1px;background:var(--line-strong);transform:translateY(-4px);}
+.cat-head .ix{font-family:var(--mono);font-size:12px;color:var(--terra);letter-spacing:.12em;transform:translateY(-4px);}
+.subhead{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--stone);margin:22px 0 8px;}
+html[lang="ar"] .subhead{font-family:var(--ar);letter-spacing:0;}
+
+ul.items{list-style:none;margin:0;padding:0;}
+.item{display:flex;align-items:center;gap:14px;padding:12px 10px;margin:0 -10px;border-radius:14px;border-bottom:1px solid var(--line-soft);transition:background .35s var(--ease);}
+.item:last-child{border-bottom:0;}
+@media(hover:hover){.item:hover{background:oklch(0.8 0.04 64/.14);}}
+.item .thumb{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;border:2px solid oklch(0.97 0.01 80);box-shadow:0 8px 20px -12px oklch(0.225 0.018 52/.55);background:var(--sand);}
+.item .info{flex:1;min-width:0;}
+.item .row1{display:flex;align-items:baseline;gap:10px;}
+.item .name{font-weight:500;color:var(--ink);font-size:clamp(16px,4.3vw,18px);}
+.item .star{color:var(--terra);font-size:.72em;vertical-align:.22em;margin-inline-start:6px;display:inline-block;animation:twinkle 3.6s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.55;transform:scale(.9);}50%{opacity:1;transform:scale(1.12);}}
+.item .lead{flex:1;border-bottom:1px dotted var(--line-strong);transform:translateY(-4px);min-width:16px;}
+.item .price{font-family:var(--mono);font-weight:500;font-size:15px;color:var(--ink-soft);white-space:nowrap;}
+.item .price .cur{color:var(--terra);font-size:.85em;margin-inline-start:1px;}
+.item .desc{font-size:12.5px;color:var(--ink-mute);margin-top:3px;line-height:1.35;}
+
+.legend{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--ink-mute);margin:6px 0 0;}
+.legend .star{color:var(--terra);}
+html[lang="ar"] .legend{font-family:var(--ar);}
+
+/* footer */
+footer{position:relative;margin-top:clamp(48px,10vw,96px);padding:60px 22px calc(46px + env(safe-area-inset-bottom));text-align:center;border-top:1px solid var(--line);overflow:hidden;background:linear-gradient(180deg,transparent,oklch(0.84 0.035 66/.5));}
+.footscene{position:absolute;left:0;right:0;bottom:0;z-index:0;pointer-events:none;opacity:.5;color:var(--terra-deep);}
+.foot-in{position:relative;z-index:1;}
+.f-mark{font-family:var(--display);font-size:34px;color:var(--ink);margin:0 0 8px;}
+.f-mark .fin{font-style:italic;}
+.f-place{color:var(--ink-soft);font-size:15px;margin:0 0 4px;}
+.f-hours{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--stone);margin:0 0 26px;}
+html[lang="ar"] .f-place,html[lang="ar"] .f-hours{font-family:var(--ar);letter-spacing:0;}
+.f-credit{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);text-decoration:none;transition:color .25s;}
+.f-credit:hover{color:var(--terra);}
+.f-credit .dot{width:5px;height:5px;border-radius:50%;background:var(--terra);}
+
+/* reveal (gated on .js → visible if JS never runs) */
+.reveal{transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.js .reveal{opacity:0;transform:translateY(20px);}
+.js .reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none;}
+  .scrollcue .dot,.item .star{animation:none;}
+}
+</style>
 </head>
 <body>
-    <img id="gif" src="https://ozzaii.github.io/FIN-Cafe-Menu/BetterBelieve.gif" alt="Welcome GIF" onerror="console.error('Error loading GIF');">
-    <div class="image-container" id="image-container">
-        <img src="https://ozzaii.github.io/FIN-Cafe-Menu/555.jpg" alt="Menu Page" onerror="console.error('Error loading JPEG');">
-    </div>
-    <script>
-        document.getElementById('gif').onload = function() {
-            console.log("GIF loaded successfully.");
-            setTimeout(function() {
-                document.getElementById('gif').style.opacity = '0';
-                setTimeout(function() {
-                    document.getElementById('gif').style.display = 'none';
-                    document.getElementById('image-container').style.display = 'block';
-                    document.getElementById('image-container').style.opacity = '1';
-                    console.log("Image container displayed.");
-                }, 500); // Time for GIF to fade out
-            }, 2500); // Duration of the GIF in milliseconds
-        };
-    </script>
+<div class="atmos" aria-hidden="true"><div class="haze"></div></div>
+<div class="celest" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<nav class="lang" aria-label="Language">
+  <button type="button" data-lang="tr" aria-pressed="true">TR</button>
+  <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  <button type="button" data-lang="ar" aria-pressed="false">ع</button>
+</nav>
+
+<header class="hero">
+  <div class="scene" aria-hidden="true">
+    <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" fill="none">
+      <path d="M0 300 L120 250 220 290 360 210 520 280 680 200 820 270 980 215 1120 275 1200 240 1200 520 0 520 Z" fill="oklch(0.86 0.03 70 / .55)"/>
+      <path d="M0 360 L90 320 180 360 270 312 360 360 470 300 580 358 700 308 820 360 940 318 1060 360 1160 322 1200 352 1200 520 0 520 Z" fill="oklch(0.74 0.045 64 / .6)"/>
+      <path d="M0 420 L140 392 280 420 420 388 560 420 700 392 840 420 980 390 1120 420 1200 404 1200 520 0 520 Z" fill="oklch(0.6 0.05 58 / .55)"/>
+      <rect x="0" y="452" width="1200" height="68" fill="oklch(0.8 0.04 66 / .35)"/>
+    </svg>
+  </div>
+  <canvas class="mist" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <p class="place"><span class="tr">Uzungöl · Trabzon</span><span class="en">Uzungöl · Trabzon</span><span class="ar">أوزنجول · طرابزون</span></p>
+    <h1 class="mark"><span class="fin">fin</span> <span class="cafe">Cafe</span></h1>
+  </div>
+  <div class="reflect" aria-hidden="true"><span class="mark"><span class="fin">fin</span> <span class="cafe">Cafe</span></span></div>
+  <p class="tagline">
+    <span class="tr">Gölün kıyısında, sisin içinden sıcak bir mola.</span>
+    <span class="en">A warm pause, drawn from the mist on the lakeshore.</span>
+    <span class="ar">استراحة دافئة على ضفاف البحيرة، من قلب الضباب.</span>
+  </p>
+  <div class="scrollcue"><span class="tr">Menü</span><span class="en">Menu</span><span class="ar">القائمة</span><span class="dot"></span></div>
+</header>
+
+<nav class="catnav" aria-label="Categories">
+  <ul>
+    <li><a href="#mutfaktan"><span class="tr">Mutfaktan</span><span class="en">Kitchen</span><span class="ar">المطبخ</span></a></li>
+    <li><a href="#sicak"><span class="tr">Sıcak</span><span class="en">Hot</span><span class="ar">ساخنة</span></a></li>
+    <li><a href="#tatlilar"><span class="tr">Tatlılar</span><span class="en">Sweets</span><span class="ar">حلويات</span></a></li>
+    <li><a href="#soguk"><span class="tr">Soğuk</span><span class="en">Cold</span><span class="ar">باردة</span></a></li>
+    <li><a href="#nargile"><span class="tr">Nargile</span><span class="en">Hookah</span><span class="ar">أركيلة</span></a></li>
+  </ul>
+</nav>
+
+<section class="spotlight reveal" aria-label="Signatures">
+  <p class="spot-kicker"><span class="tr">Buranın imzası</span><span class="en">Signatures of the house</span><span class="ar">نكهات المكان المميزة</span></p>
+  <div class="spot-grid">
+    <article class="spot">
+      <img class="photo" src="img/buyuk_demlik.jpg" alt="" loading="lazy" width="118" height="118">
+      <h3><span class="tr">Demlik Çay</span><span class="en">Pot of Tea</span><span class="ar">إبريق شاي</span></h3>
+      <p><span class="tr">Bakır demlikte, Karadeniz usulü tavşan kanı çay.</span><span class="en">Black Sea-style brewed tea in a copper pot.</span><span class="ar">شاي مخمّر على الطريقة البحرية في إبريق نحاسي.</span></p>
+      <span class="pr">300<span class="cur">₺</span></span>
+    </article>
+    <article class="spot">
+      <img class="photo" src="img/turk_kahvesi.jpg" alt="" loading="lazy" width="118" height="118">
+      <h3><span class="tr">Türk Kahvesi</span><span class="en">Turkish Coffee</span><span class="ar">قهوة تركية</span></h3>
+      <p><span class="tr">Köpüğüyle, közde pişmiş geleneğin tadı.</span><span class="en">Foam-topped, the taste of tradition.</span><span class="ar">بطبقة الرغوة، نكهة التقاليد الأصيلة.</span></p>
+      <span class="pr">100<span class="cur">₺</span></span>
+    </article>
+    <article class="spot">
+      <img class="photo" src="img/fistik_ruyasi.jpg" alt="" loading="lazy" width="118" height="118">
+      <h3><span class="tr">Fıstık Rüyası</span><span class="en">Pistachio Dream</span><span class="ar">حلم الفستق</span></h3>
+      <p><span class="tr">Frambuaz ve kremayla katmanlı cheesecake.</span><span class="en">Layered cheesecake with raspberry & cream.</span><span class="ar">تشيز كيك بطبقات الفرامبواز والكريمة.</span></p>
+      <span class="pr">200<span class="cur">₺</span></span>
+    </article>
+  </div>
+</section>
+
+<main>
+  <!-- MUTFAKTAN (food) -->
+  <section class="cat reveal" id="mutfaktan">
+    <div class="cat-head"><h2><span class="tr">Mutfaktan</span><span class="en">From the Kitchen</span><span class="ar">من المطبخ</span></h2><span class="rule"></span><span class="ix">01</span></div>
+    <ul class="items">
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Serpme Kahvaltı</span><span class="en">Spread Breakfast</span><span class="ar">فطور مفتوح</span></span><span class="lead"></span><span class="price">750<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Sac Kavurma</span><span class="en">Sautéed Beef (sac)</span><span class="ar">صاج كاورما</span></span><span class="lead"></span><span class="price">750<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Köfte</span><span class="en">Grilled Meatballs</span><span class="ar">كفتة</span></span><span class="lead"></span><span class="price">550<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Tavuk Izgara</span><span class="en">Grilled Chicken</span><span class="ar">دجاج مشوي</span></span><span class="lead"></span><span class="price">450<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Mıhlama <span class="star">★</span></span><span class="en">Muhlama <span class="star">★</span></span><span class="ar">مُحلمة <span class="star">★</span></span><span class="lead"></span><span class="price">350<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Karadeniz'in tereyağlı peynir fondüsü.</span><span class="en">Black Sea buttery cheese fondue.</span><span class="ar">فوندو الجبن بالزبدة على طريقة البحر الأسود.</span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Menemen</span><span class="en">Menemen</span><span class="ar">منمن</span></span><span class="lead"></span><span class="price">350<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Yumurta, domates, biber.</span><span class="en">Eggs, tomato, pepper.</span><span class="ar">بيض، طماطم، فلفل.</span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Hamburger</span><span class="en">Hamburger</span><span class="ar">همبرغر</span></span><span class="lead"></span><span class="price">350<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Gözleme</span><span class="en">Gözleme</span><span class="ar">جوزلمة</span></span><span class="lead"></span><span class="price">300<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Sacda açılmış el yufkası.</span><span class="en">Hand-rolled flatbread on the griddle.</span><span class="ar">رقائق عجين محضّرة على الصاج.</span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Tost</span><span class="en">Toasted Sandwich</span><span class="ar">توست</span></span><span class="lead"></span><span class="price">300<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Salata</span><span class="en">Salad</span><span class="ar">سلطة</span></span><span class="lead"></span><span class="price">300<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Cips</span><span class="en">Fries</span><span class="ar">بطاطا مقلية</span></span><span class="lead"></span><span class="price">300<span class="cur">₺</span></span></div></div></li>
+    </ul>
+  </section>
+
+  <!-- SICAK İÇECEKLER (hot) -->
+  <section class="cat reveal" id="sicak">
+    <div class="cat-head"><h2><span class="tr">Sıcak İçecekler</span><span class="en">Hot Drinks</span><span class="ar">مشروبات ساخنة</span></h2><span class="rule"></span><span class="ix">02</span></div>
+    <ul class="items">
+      <li class="item"><img class="thumb" src="img/cay.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Çay</span><span class="en">Tea</span><span class="ar">شاي</span></span><span class="lead"></span><span class="price">30<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/sutlu_cay.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sütlü Çay</span><span class="en">Milk Tea (Karak)</span><span class="ar">شاي بالحليب (كرك)</span></span><span class="lead"></span><span class="price">50<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/kucuk_demlik.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Küçük Demlik Çay</span><span class="en">Small Pot of Tea</span><span class="ar">إبريق شاي صغير</span></span><span class="lead"></span><span class="price">200<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/buyuk_demlik.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Büyük Demlik Çay</span><span class="en">Large Pot of Tea</span><span class="ar">إبريق شاي كبير</span></span><span class="lead"></span><span class="price">300<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/turk_kahvesi.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Türk Kahvesi</span><span class="en">Turkish Coffee</span><span class="ar">قهوة تركية</span></span><span class="lead"></span><span class="price">100<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/sutlu_turk_kahvesi.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sütlü Türk Kahvesi</span><span class="en">Turkish Coffee w/ Milk</span><span class="ar">قهوة تركية بالحليب</span></span><span class="lead"></span><span class="price">120<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/nescafe.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Nescafe</span><span class="en">Nescafé</span><span class="ar">نسكافيه</span></span><span class="lead"></span><span class="price">75<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/sicak_cikolata.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sıcak Çikolata</span><span class="en">Hot Chocolate</span><span class="ar">شوكولاتة ساخنة</span></span><span class="lead"></span><span class="price">75<span class="cur">₺</span></span></div></div></li>
+    </ul>
+  </section>
+
+  <!-- TATLILAR + EKSTRALAR -->
+  <section class="cat reveal" id="tatlilar">
+    <div class="cat-head"><h2><span class="tr">Tatlılar</span><span class="en">Sweets</span><span class="ar">الحلويات</span></h2><span class="rule"></span><span class="ix">03</span></div>
+    <ul class="items">
+      <li class="item"><img class="thumb" src="img/fistik_ruyasi.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Fıstık Rüyası <span class="star">★</span></span><span class="en">Pistachio Dream <span class="star">★</span></span><span class="ar">حلم الفستق <span class="star">★</span></span><span class="lead"></span><span class="price">200<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Frambuaz ve krema ile cheesecake.</span><span class="en">Cheesecake with raspberry & cream.</span><span class="ar">تشيز كيك بالفرامبواز والكريمة.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/san_sebastian.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">San Sebastian Cheesecake</span><span class="en">San Sebastian Cheesecake</span><span class="ar">تشيز كيك سان سيباستيان</span></span><span class="lead"></span><span class="price">200<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Kremsi bir cheesecake.</span><span class="en">A creamy cheesecake.</span><span class="ar">تشيز كيك كريمي.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/sutlac.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sütlaç <span class="star">★</span></span><span class="en">Rice Pudding <span class="star">★</span></span><span class="ar">أرز بالحليب <span class="star">★</span></span><span class="lead"></span><span class="price">120<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Geleneksel Türk tatlımız, fırında.</span><span class="en">Our oven-baked traditional Turkish dessert.</span><span class="ar">حلوانا التركية التقليدية، في الفرن.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/sufle.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sufle</span><span class="en">Soufflé</span><span class="ar">سوفليه</span></span><span class="lead"></span><span class="price">175<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Sıcak, hafif ve çikolatalı.</span><span class="en">Warm, light & chocolatey.</span><span class="ar">ساخن، خفيف وبالشوكولاتة.</span></div></div></li>
+    </ul>
+    <p class="subhead"><span class="tr">Ekstralar</span><span class="en">Extras</span><span class="ar">إضافات</span></p>
+    <ul class="items">
+      <li class="item"><img class="thumb" src="img/sandvic.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sandviç</span><span class="en">Sandwich</span><span class="ar">ساندويتش</span></span><span class="lead"></span><span class="price">120<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Nefis cheddarlı sandviç.</span><span class="en">Tasty cheddar sandwich.</span><span class="ar">ساندويتش لذيذ بجبن الشيدر.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/bardakta_misir.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Bardakta Mısır</span><span class="en">Corn Cup</span><span class="ar">ذرة في الكوب</span></span><span class="lead"></span><span class="price">120<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Taptaze ve lezzetli.</span><span class="en">Fresh & tasty.</span><span class="ar">طازجة ولذيذة.</span></div></div></li>
+    </ul>
+  </section>
+
+  <!-- SOĞUK İÇECEKLER -->
+  <section class="cat reveal" id="soguk">
+    <div class="cat-head"><h2><span class="tr">Soğuk İçecekler</span><span class="en">Cold Drinks</span><span class="ar">مشروبات باردة</span></h2><span class="rule"></span><span class="ix">04</span></div>
+    <ul class="items">
+      <li class="item"><img class="thumb" src="img/portakal_suyu.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Taze Sıkma Portakal Suyu <span class="star">★</span></span><span class="en">Fresh Orange Juice <span class="star">★</span></span><span class="ar">عصير برتقال طازج <span class="star">★</span></span><span class="lead"></span><span class="price">120<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Taze sıkılmış, canlandırıcı ve sağlıklı.</span><span class="en">Freshly squeezed, refreshing & healthy.</span><span class="ar">معصور طازجًا، منعش وصحي.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/soguk_kahve.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Soğuk Kahve</span><span class="en">Iced Coffee</span><span class="ar">قهوة باردة</span></span><span class="lead"></span><span class="price">100<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Iced latte / cappuccino / americano.</span><span class="en">Iced latte / cappuccino / americano.</span><span class="ar">آيس لاتيه / كابتشينو / أمريكانو.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/nar_suyu.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Doğal Nar Suyu</span><span class="en">Natural Pomegranate Juice</span><span class="ar">عصير رمان طبيعي</span></span><span class="lead"></span><span class="price">150<span class="cur">₺</span></span></div><div class="desc"><span class="tr">Taze narlardan, vitamin dolu.</span><span class="en">From fresh pomegranates, vitamin-rich.</span><span class="ar">من الرمان الطازج، غني بالفيتامينات.</span></div></div></li>
+      <li class="item"><img class="thumb" src="img/coca_cola.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Coca-Cola</span><span class="en">Coca-Cola</span><span class="ar">كوكا كولا</span></span><span class="lead"></span><span class="price">100<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/fanta.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Fanta</span><span class="en">Fanta</span><span class="ar">فانتا</span></span><span class="lead"></span><span class="price">100<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/sprite.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Sprite</span><span class="en">Sprite</span><span class="ar">سبرايت</span></span><span class="lead"></span><span class="price">100<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/maden_suyu.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Maden Suyu</span><span class="en">Sparkling Water</span><span class="ar">مياه معدنية</span></span><span class="lead"></span><span class="price">75<span class="cur">₺</span></span></div></div></li>
+      <li class="item"><img class="thumb" src="img/su.jpg" alt="" loading="lazy" width="56" height="56"><div class="info"><div class="row1"><span class="name"><span class="tr">Su</span><span class="en">Water</span><span class="ar">ماء</span></span><span class="lead"></span><span class="price">20<span class="cur">₺</span></span></div></div></li>
+    </ul>
+  </section>
+
+  <!-- NARGİLE -->
+  <section class="cat reveal" id="nargile">
+    <div class="cat-head"><h2><span class="tr">Nargile</span><span class="en">Hookah</span><span class="ar">أركيلة</span></h2><span class="rule"></span><span class="ix">05</span></div>
+    <ul class="items">
+      <li class="item"><div class="info"><div class="row1"><span class="name"><span class="tr">Nargile</span><span class="en">Hookah</span><span class="ar">أركيلة</span></span><span class="lead"></span><span class="price">600<span class="cur">₺</span></span></div></div></li>
+    </ul>
+  </section>
+
+  <p class="legend reveal"><span class="star">★</span><span class="tr">Şefin önerisi</span><span class="en">Chef's pick</span><span class="ar">اختيار الشيف</span></p>
+</main>
+
+<footer>
+  <svg class="footscene" viewBox="0 0 1200 120" preserveAspectRatio="xMidYMax slice" fill="none" aria-hidden="true">
+    <path d="M0 80 L150 58 300 80 450 56 600 80 750 58 900 80 1050 58 1200 78 1200 120 0 120 Z" fill="currentColor" opacity=".35"/>
+    <path d="M0 96 L200 78 400 96 600 76 800 96 1000 78 1200 94 1200 120 0 120 Z" fill="currentColor" opacity=".5"/>
+  </svg>
+  <div class="foot-in">
+    <p class="f-mark"><span class="fin">fin</span> Cafe</p>
+    <p class="f-place"><span class="tr">Uzungöl · Çaykara / Trabzon</span><span class="en">Uzungöl · Çaykara / Trabzon</span><span class="ar">أوزنجول · تشايكارا / طرابزون</span></p>
+    <p class="f-hours"><span class="tr">HER GÜN · 08:00 – 24:00</span><span class="en">DAILY · 08:00 – 24:00</span><span class="ar">يوميًا · 08:00 – 24:00</span></p>
+    <a class="f-credit" href="https://ozai.info" target="_blank" rel="noopener"><span class="dot"></span><span class="tr">Dijital menü · OZAI</span><span class="en">Digital menu · OZAI</span><span class="ar">قائمة رقمية · OZAI</span></a>
+  </div>
+</footer>
 </body>
 </html>
