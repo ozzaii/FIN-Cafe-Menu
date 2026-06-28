@@ -46,6 +46,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Markazi+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-uzungol.jpg">
 
 <script type="application/ld+json">
 {
@@ -196,9 +197,14 @@ html[lang="ar"] .price{direction:ltr;}
 .lang button[aria-pressed="true"]{background:var(--gold);color:var(--bg-deep);}
 
 /* ===== hero ===== */
-.hero{position:relative;overflow:hidden;text-align:center;padding:clamp(86px,22vw,140px) 24px clamp(40px,10vw,64px);}
-.hero .contours{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:min(150%,1100px);height:auto;opacity:.5;color:var(--gold);pointer-events:none;}
-.hero-in{position:relative;z-index:2;animation:rise .9s var(--x-out) both;}
+.hero{position:relative;overflow:hidden;text-align:center;min-height:90svh;min-height:90vh;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(120px,30vw,210px) 24px clamp(46px,11vw,80px);}
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.hero-media img{position:absolute;top:-9%;left:0;width:100%;height:118%;object-fit:cover;object-position:50% 42%;will-change:transform;}
+.hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,oklch(0.16 0.03 161 / .40) 0%,oklch(0.18 0.032 161 / .26) 36%,oklch(0.205 0.036 161 / .84) 80%,var(--bg-deep) 100%);}
+.hero .contours{position:absolute;left:50%;bottom:-5%;transform:translateX(-50%);width:min(165%,1200px);height:auto;opacity:.30;color:var(--gold);pointer-events:none;z-index:2;}
+.hero-in{position:relative;z-index:3;animation:rise 1s var(--x-out) both;}
+.hero .brand,.hero .tagline,.hero .eyebrow{text-shadow:0 2px 28px oklch(0.15 0.03 161 / .65);}
 .sprig{display:block;margin:0 auto 20px;width:54px;height:auto;color:var(--gold);}
 .eyebrow{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin:0 0 22px;}
 html[lang="ar"] .eyebrow{letter-spacing:.12em;font-family:var(--ar);font-weight:600;}
@@ -282,7 +288,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:clamp(50px,12
 footer .contours{position:absolute;left:50%;bottom:-30%;transform:translateX(-50%);width:min(160%,1100px);opacity:.4;color:var(--gold);pointer-events:none;}
 .foot-in{position:relative;z-index:2;}
 .f-brand{font-family:var(--serif);font-size:34px;color:var(--ink);margin:0 0 16px;}
-.f-call{display:inline-flex;align-items:center;gap:9px;font-family:var(--serif);font-size:21px;color:var(--gold);text-decoration:none;}
+.f-call{display:inline-flex;align-items:center;gap:9px;font-family:var(--serif);font-size:21px;color:var(--gold);text-decoration:none;direction:ltr;}
 .f-call svg{width:17px;height:17px;}
 .f-line{font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin:14px 0 3px;}
 .f-hours{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--ink-mute);margin:0 0 22px;}
@@ -292,8 +298,23 @@ footer .contours{position:absolute;left:50%;bottom:-30%;transform:translateX(-50
 .f-credit .dia{width:4px;height:4px;transform:rotate(45deg);background:var(--gold);}
 html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-family:var(--ar);letter-spacing:.02em;text-transform:none;}
 
-@keyframes rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.hero-in{animation:none;}.actions a{transition:none;}}
+/* ===== nature interlude band ===== */
+.interlude{position:relative;overflow:hidden;min-height:48vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:clamp(64px,15vw,120px) 24px;border-top:1px solid var(--line-gold);border-bottom:1px solid var(--line-gold);}
+.interlude img{position:absolute;top:-12%;left:0;width:100%;height:124%;object-fit:cover;object-position:50% 46%;z-index:0;will-change:transform;}
+.interlude .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,oklch(0.17 0.03 161 / .64),oklch(0.20 0.035 161 / .52));}
+.interlude .q{position:relative;z-index:2;max-width:20ch;margin:0 auto;}
+.interlude .q .sprig{margin:0 auto 16px;width:46px;}
+.interlude .q p{font-family:var(--serif);font-size:clamp(23px,5.8vw,40px);color:var(--ink);margin:0;line-height:1.28;text-shadow:0 2px 26px oklch(0.15 0.03 161 / .75);}
+html[lang="ar"] .interlude .q p{font-family:var(--ar);}
+
+/* ===== reveal ===== */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .85s var(--x-out),transform .85s var(--x-out);transition-delay:var(--d,0s);}
+.reveal.in{opacity:1;transform:none;}
+.sig-rail .sig:nth-child(1){--d:.04s}.sig-rail .sig:nth-child(2){--d:.12s}.sig-rail .sig:nth-child(3){--d:.20s}.sig-rail .sig:nth-child(4){--d:.28s}
+
+@keyframes rise{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.hero-in{animation:none;}.actions a{transition:none;}
+  .reveal{opacity:1!important;transform:none!important;transition:none;}.hero-media img,.interlude img{transform:none!important;}}
 </style>
 </head>
 <body>
@@ -305,6 +326,10 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
 </nav>
 
 <header class="hero">
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/hero-uzungol.jpg" alt="Uzungöl gölü, alacakaranlıkta sisin içinden" width="2000" height="1124" fetchpriority="high">
+    <div class="hero-scrim"></div>
+  </div>
   <svg class="contours" viewBox="0 0 1000 560" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
     <path d="M-40 300C140 250 260 360 420 320 580 280 660 380 840 330 940 302 1010 330 1060 318" opacity=".5"/>
     <path d="M-40 350C150 300 280 410 440 372 600 334 690 432 860 384 960 356 1020 384 1060 372" opacity=".4"/>
@@ -332,10 +357,10 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
   <h2 class="sec-kicker serif"><span class="tr">Buranın İmzası</span><span class="en">House Signatures</span><span class="ar">توقيع المكان</span></h2>
   <p class="sec-sub"><span class="tr">Mutlaka tadılmalı</span><span class="en">Not to be missed</span><span class="ar">لا يُفوّت</span></p>
   <div class="sig-rail">
-    <figure class="sig"><div class="frame"><img src="img/kunefe.jpg" alt="Künefe, közde, sıcak servis" loading="lazy" decoding="async" width="900" height="900"></div><figcaption><span class="nm serif"><span class="tr">Künefe</span><span class="en">Künefe</span><span class="ar">كنافة</span></span><span class="pr serif">250<span style="font-size:.8em">₺</span></span></figcaption></figure>
-    <figure class="sig"><div class="frame"><img src="img/fistik_ruyasi.jpg" alt="Fıstık Rüyası cheesecake" loading="lazy" decoding="async" width="480" height="480"></div><figcaption><span class="nm serif"><span class="tr">Fıstık Rüyası</span><span class="en">Pistachio Dream</span><span class="ar">حلم الفستق</span></span><span class="pr serif">200<span style="font-size:.8em">₺</span></span></figcaption></figure>
-    <figure class="sig"><div class="frame"><img src="img/kadayif.jpg" alt="Dondurmalı kadayıf" loading="lazy" decoding="async" width="900" height="900"></div><figcaption><span class="nm serif"><span class="tr">Dondurmalı Kadayıf</span><span class="en">Kadayıf &amp; Ice Cream</span><span class="ar">كنافة بالآيس كريم</span></span><span class="pr serif">200<span style="font-size:.8em">₺</span></span></figcaption></figure>
-    <figure class="sig"><div class="frame"><img src="img/san_sebastian.jpg" alt="San Sebastian cheesecake" loading="lazy" decoding="async" width="480" height="480"></div><figcaption><span class="nm serif"><span class="tr">San Sebastian</span><span class="en">San Sebastian</span><span class="ar">سان سيباستيان</span></span><span class="pr serif">200<span style="font-size:.8em">₺</span></span></figcaption></figure>
+    <figure class="sig reveal"><div class="frame"><img src="img/kunefe.jpg" alt="Künefe, közde, sıcak servis" loading="lazy" decoding="async" width="900" height="900"></div><figcaption><span class="nm serif"><span class="tr">Künefe</span><span class="en">Künefe</span><span class="ar">كنافة</span></span><span class="pr serif">250<span style="font-size:.8em">₺</span></span></figcaption></figure>
+    <figure class="sig reveal"><div class="frame"><img src="img/fistik_ruyasi.jpg" alt="Fıstık Rüyası cheesecake" loading="lazy" decoding="async" width="480" height="480"></div><figcaption><span class="nm serif"><span class="tr">Fıstık Rüyası</span><span class="en">Pistachio Dream</span><span class="ar">حلم الفستق</span></span><span class="pr serif">200<span style="font-size:.8em">₺</span></span></figcaption></figure>
+    <figure class="sig reveal"><div class="frame"><img src="img/kadayif.jpg" alt="Dondurmalı kadayıf" loading="lazy" decoding="async" width="900" height="900"></div><figcaption><span class="nm serif"><span class="tr">Dondurmalı Kadayıf</span><span class="en">Kadayıf &amp; Ice Cream</span><span class="ar">كنافة بالآيس كريم</span></span><span class="pr serif">200<span style="font-size:.8em">₺</span></span></figcaption></figure>
+    <figure class="sig reveal"><div class="frame"><img src="img/san_sebastian.jpg" alt="San Sebastian cheesecake" loading="lazy" decoding="async" width="480" height="480"></div><figcaption><span class="nm serif"><span class="tr">San Sebastian</span><span class="en">San Sebastian</span><span class="ar">سان سيباستيان</span></span><span class="pr serif">200<span style="font-size:.8em">₺</span></span></figcaption></figure>
   </div>
 </section>
 
@@ -351,7 +376,7 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
 
 <main class="wrap">
 
-  <section class="cat" id="mutfaktan">
+  <section class="cat reveal" id="mutfaktan">
     <div class="cat-head"><svg class="leaf" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M12 31V8"/><path d="M12 20c-6 0-9-4-9-10 6 0 9 4 9 10ZM12 16c6 0 9-4 9-10-6 0-9 4-9 10Z"/></svg><h2 class="serif"><span class="tr">Mutfaktan</span><span class="en">From the Kitchen</span><span class="ar">من المطبخ</span></h2><span class="hr"></span></div>
     <p class="cat-note"><span class="tr">Sacın üstünde, dağ usulü.</span><span class="en">Off the griddle, the mountain way.</span><span class="ar">من الصاج، على الطريقة الجبلية.</span></p>
     <ul class="rows">
@@ -369,7 +394,7 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
     </ul>
   </section>
 
-  <section class="cat" id="sicak">
+  <section class="cat reveal" id="sicak">
     <div class="cat-head"><svg class="leaf" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M12 31V8"/><path d="M12 20c-6 0-9-4-9-10 6 0 9 4 9 10ZM12 16c6 0 9-4 9-10-6 0-9 4-9 10Z"/></svg><h2 class="serif"><span class="tr">Sıcak İçecekler</span><span class="en">Hot Drinks</span><span class="ar">مشروبات ساخنة</span></h2><span class="hr"></span></div>
     <p class="cat-note"><span class="tr">Sisi dağıtan ilk yudum.</span><span class="en">The first sip that clears the mist.</span><span class="ar">الرشفة التي تبدّد الضباب.</span></p>
     <ul class="rows">
@@ -384,7 +409,7 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
     </ul>
   </section>
 
-  <section class="cat" id="tatlilar">
+  <section class="cat reveal" id="tatlilar">
     <div class="cat-head"><svg class="leaf" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M12 31V8"/><path d="M12 20c-6 0-9-4-9-10 6 0 9 4 9 10ZM12 16c6 0 9-4 9-10-6 0-9 4-9 10Z"/></svg><h2 class="serif"><span class="tr">Tatlılar</span><span class="en">Sweets</span><span class="ar">الحلويات</span></h2><span class="hr"></span></div>
     <p class="cat-note"><span class="tr">Sona tatlı bir nokta.</span><span class="en">A sweet full stop.</span><span class="ar">ختامٌ حلو.</span></p>
     <ul class="rows">
@@ -402,7 +427,7 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
     </ul>
   </section>
 
-  <section class="cat" id="soguk">
+  <section class="cat reveal" id="soguk">
     <div class="cat-head"><svg class="leaf" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M12 31V8"/><path d="M12 20c-6 0-9-4-9-10 6 0 9 4 9 10ZM12 16c6 0 9-4 9-10-6 0-9 4-9 10Z"/></svg><h2 class="serif"><span class="tr">Soğuk İçecekler</span><span class="en">Cold Drinks</span><span class="ar">مشروبات باردة</span></h2><span class="hr"></span></div>
     <p class="cat-note"><span class="tr">Serin, berrak, göl gibi.</span><span class="en">Cool and clear, like the lake.</span><span class="ar">باردٌ وصافٍ، كالبحيرة.</span></p>
     <ul class="rows">
@@ -417,7 +442,7 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
     </ul>
   </section>
 
-  <section class="cat" id="nargile">
+  <section class="cat reveal" id="nargile">
     <div class="cat-head"><svg class="leaf" viewBox="0 0 24 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M12 31V8"/><path d="M12 20c-6 0-9-4-9-10 6 0 9 4 9 10ZM12 16c6 0 9-4 9-10-6 0-9 4-9 10Z"/></svg><h2 class="serif"><span class="tr">Nargile</span><span class="en">Hookah</span><span class="ar">أركيلة</span></h2><span class="hr"></span></div>
     <p class="cat-note"><span class="tr">Akşamın yavaş dumanı.</span><span class="en">The slow smoke of evening.</span><span class="ar">دخان المساء البطيء.</span></p>
     <ul class="rows">
@@ -426,6 +451,15 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
   </section>
 
 </main>
+
+<section class="interlude reveal" aria-label="Uzungöl">
+  <img src="img/uzungol-lake.jpg" alt="Uzungöl gölü ve sisli dağlar" loading="lazy" decoding="async" width="1700" height="1133">
+  <div class="scrim"></div>
+  <div class="q">
+    <svg class="sprig" viewBox="0 0 80 56" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" style="color:var(--gold)"><path d="M40 54V14"/><path d="M40 44c-9 0-15-5-17-13M40 44c9 0 15-5 17-13"/><path d="M40 32c-8 0-13-4-15-11M40 32c8 0 13-4 15-11"/><circle cx="40" cy="9" r="3.4" fill="currentColor" stroke="none"/></svg>
+    <p><span class="tr">Göl, dağ ve sisin buluştuğu sofra.</span><span class="en">Where the lake, the mountains and the mist share a table.</span><span class="ar">حيث تجتمع البحيرة والجبال والضباب على مائدة واحدة.</span></p>
+  </div>
+</section>
 
 <footer>
   <svg class="contours" viewBox="0 0 1000 300" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
@@ -484,6 +518,27 @@ html[lang="ar"] .f-line,html[lang="ar"] .f-hours,html[lang="ar"] .f-credit{font-
   }
   window.addEventListener("scroll",function(){if(!ticking){ticking=true;requestAnimationFrame(spy);}},{passive:true});
   spy();
+
+  /* parallax */
+  var heroEl=document.querySelector(".hero");
+  var heroImg=document.querySelector(".hero-media img");
+  var interImg=document.querySelector(".interlude img");
+  var pT=false;
+  function para(){
+    pT=false;
+    var y=window.pageYOffset||0;
+    if(heroImg){var hh=heroEl?heroEl.offsetHeight:700; heroImg.style.transform="translateY("+Math.min(y*0.13,hh*0.085)+"px)";}
+    if(interImg){var sec=interImg.parentNode,r=sec.getBoundingClientRect();
+      if(r.bottom>0&&r.top<window.innerHeight){var prog=(window.innerHeight-r.top)/(window.innerHeight+r.height);
+        interImg.style.transform="translateY("+((prog-0.5)*2*r.height*0.10)+"px)";}}
+  }
+  if(!reduce){window.addEventListener("scroll",function(){if(!pT){pT=true;requestAnimationFrame(para);}},{passive:true});para();}
+
+  /* reveal */
+  if("IntersectionObserver" in window){
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");ro.unobserve(e.target);}});},{threshold:0.12,rootMargin:"0px 0px -6% 0px"});
+    document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});
+  }else{document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");});}
 })();
 </script>
 </body>
